@@ -1,17 +1,36 @@
 import React from 'react';
-import { TouchableOpacity, ScrollView, Text, View } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
-export default function ToDoList({ tasks, styles }) {
+const ToDoList = ({ tasks }) => {
   return (
-    <ScrollView>
+    <View>
       {tasks.map((task, index) => (
-        <TouchableOpacity key={index}>
-          <View style={[styles.task, task.completed && styles.completed]}>
-            <Text style={styles.taskText}>{task.text}</Text>
-          </View>
-        </TouchableOpacity>
+        <View
+          key={index}
+          style={[
+            styles.task,
+            task.completed ? styles.completed : null,
+          ]}
+        >
+          <Text style={styles.taskText}>{task.text}</Text>
+        </View>
       ))}
-    </ScrollView>
+    </View>
   );
-}
+};
 
+const styles = StyleSheet.create({
+  task: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderColor: '#ccc',
+  },
+  taskText: {
+    fontSize: 16,
+  },
+  completed: {
+    backgroundColor: '#e0e0e0',
+  },
+});
+
+export default ToDoList;
