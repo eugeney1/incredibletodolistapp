@@ -1,19 +1,30 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, Button, TextInput, View } from 'react-native';
 import ToDoList from './components/ToDoList';
 import ToDoForm from './components/ToDoForm';
 
 function App() {
   const [tasks, setTasks] = useState([
-    'Do laundry',
-    'Go to gym',
-    'Walk dog',
+    { text: 'Do laundry', completed: false },
+    { text: 'Go to gym', completed: true },
+    { text: 'Walk dog', completed: false },
   ]);
+
+  // Function to add a new task
+  const addTask = (taskText) => {
+    // Prevent duplicates and empty tasks
+    if (!taskText || tasks.some((task) => task.text === taskText)) return;
+
+    setTasks([...tasks, { text: taskText, completed: false }]);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* Display the ToDo list */}
       <ToDoList tasks={tasks} styles={styles} />
-      <ToDoForm styles={styles} addTask={setTasks} />
+
+      {/* Add tasks via the ToDoForm */}
+      <ToDoForm styles={styles} addTask={addTask} />
     </SafeAreaView>
   );
 }
@@ -31,6 +42,9 @@ const styles = StyleSheet.create({
   },
   taskText: {
     fontSize: 16,
+  },
+  completed: {
+    backgroundColor: '#e0e0e0',
   },
   form: {
     flexDirection: 'row',
